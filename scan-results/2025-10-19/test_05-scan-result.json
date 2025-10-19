@@ -1,0 +1,179 @@
+{
+  "SchemaVersion": 2,
+  "CreatedAt": "2025-10-19T10:52:46.376187+09:00",
+  "ArtifactName": "test/tf/test_05.tf",
+  "ArtifactType": "filesystem",
+  "Results": [
+    {
+      "Target": ".",
+      "Class": "config",
+      "Type": "terraform",
+      "MisconfSummary": {
+        "Successes": 57,
+        "Failures": 0
+      }
+    },
+    {
+      "Target": "terraform-aws-modules/security-group/aws/main.tf",
+      "Class": "config",
+      "Type": "terraform",
+      "MisconfSummary": {
+        "Successes": 0,
+        "Failures": 1
+      },
+      "Misconfigurations": [
+        {
+          "Type": "Terraform Security Check",
+          "ID": "AVD-AWS-0107",
+          "AVDID": "AVD-AWS-0107",
+          "Title": "Security groups should not allow unrestricted ingress to SSH or RDP from any IP address.",
+          "Description": "Security groups provide stateful filtering of ingress and egress network traffic to AWS\nresources. It is recommended that no security group allows unrestricted ingress access to\nremote server administration ports, such as SSH to port 22 and RDP to port 3389.\n",
+          "Message": "Security group rule allows unrestricted ingress from any IP address.",
+          "Namespace": "builtin.aws.ec2.aws0107",
+          "Query": "data.builtin.aws.ec2.aws0107.deny",
+          "Resolution": "Set a more restrictive CIDR range",
+          "Severity": "HIGH",
+          "PrimaryURL": "https://avd.aquasec.com/misconfig/avd-aws-0107",
+          "References": [
+            "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html",
+            "https://docs.aws.amazon.com/securityhub/latest/userguide/ec2-controls.html#ec2-13",
+            "https://docs.aws.amazon.com/securityhub/latest/userguide/ec2-controls.html#ec2-14",
+            "https://avd.aquasec.com/misconfig/avd-aws-0107"
+          ],
+          "Status": "FAIL",
+          "CauseMetadata": {
+            "Resource": "module.rules_two",
+            "Provider": "AWS",
+            "Service": "ec2",
+            "StartLine": 197,
+            "EndLine": 204,
+            "Code": {
+              "Lines": [
+                {
+                  "Number": 191,
+                  "Content": "resource \"aws_security_group_rule\" \"ingress_with_cidr_blocks\" {",
+                  "IsCause": false,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group_rule\"\u001b[0m \u001b[38;5;37m\"ingress_with_cidr_blocks\"\u001b[0m {",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 192,
+                  "Content": "",
+                  "IsCause": false,
+                  "Annotation": "",
+                  "Truncated": true,
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 197,
+                  "Content": "  cidr_blocks = compact(split(",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "  \u001b[38;5;245mcidr_blocks\u001b[0m =\u001b[38;5;33m compact\u001b[0m(\u001b[38;5;33msplit\u001b[0m(",
+                  "FirstCause": true,
+                  "LastCause": false
+                },
+                {
+                  "Number": 198,
+                  "Content": "    \",\",",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "    \u001b[38;5;37m\",\"\u001b[0m,",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 199,
+                  "Content": "    lookup(",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "    lookup(",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 200,
+                  "Content": "      var.ingress_with_cidr_blocks[count.index],",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "      \u001b[38;5;33mvar\u001b[0m.ingress_with_cidr_blocks[\u001b[38;5;33mcount\u001b[0m.index],",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 201,
+                  "Content": "      \"cidr_blocks\",",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "      \u001b[38;5;37m\"cidr_blocks\"\u001b[0m,",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 202,
+                  "Content": "      join(\",\", var.ingress_cidr_blocks),",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "      \u001b[38;5;33mjoin\u001b[0m(\u001b[38;5;37m\",\"\u001b[0m, \u001b[38;5;33mvar\u001b[0m.ingress_cidr_blocks),",
+                  "FirstCause": false,
+                  "LastCause": false
+                },
+                {
+                  "Number": 203,
+                  "Content": "    ),",
+                  "IsCause": true,
+                  "Annotation": "",
+                  "Truncated": false,
+                  "Highlighted": "    ),",
+                  "FirstCause": false,
+                  "LastCause": true
+                },
+                {
+                  "Number": 204,
+                  "Content": "",
+                  "IsCause": false,
+                  "Annotation": "",
+                  "Truncated": true,
+                  "FirstCause": false,
+                  "LastCause": false
+                }
+              ]
+            },
+            "Occurrences": [
+              {
+                "Resource": "aws_security_group_rule.ingress_with_cidr_blocks[0]",
+                "Filename": "terraform-aws-modules/security-group/aws/main.tf",
+                "Location": {
+                  "StartLine": 191,
+                  "EndLine": 229
+                }
+              },
+              {
+                "Resource": "module.rules_two",
+                "Filename": "test_05.tf",
+                "Location": {
+                  "StartLine": 1,
+                  "EndLine": 16
+                }
+              }
+            ],
+            "RenderedCause": {
+              "Raw": "resource \"aws_security_group_rule\" \"ingress_with_cidr_blocks\" {\n  cidr_blocks = [\"0.0.0.0/0\"]\n}",
+              "Highlighted": "\u001b[38;5;33mresource\u001b[0m \u001b[38;5;37m\"aws_security_group_rule\"\u001b[0m \u001b[38;5;37m\"ingress_with_cidr_blocks\"\u001b[0m {\n  \u001b[38;5;245mcidr_blocks\u001b[0m = [\u001b[38;5;37m\"0.0.0.0/0\"\u001b[0m]\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "SchemaVersion": 2,
+  "CreatedAt": "2025-10-19T10:52:40.724847+09:00",
+  "ArtifactName": "test/tf/test_04.tf",
+  "ArtifactType": "filesystem",
+  "Results": [
+    {
+      "Target": ".",
+      "Class": "config",
+      "Type": "terraform",
+      "MisconfSummary": {
+        "Successes": 38,
+        "Failures": 0
+      }
+    }
+  ]
+}
